@@ -81,3 +81,11 @@ if (USE_WEBHOOK && WEBHOOK_URL) {
   console.log("🤖 Bot starting with long polling...");
   await bot.start();
 }
+// --- Keep Alive Server for Render ---
+if (!USE_WEBHOOK) {
+  const port = Deno.env.get("PORT") || "8000";
+  console.log(`🌐 Listening on port ${port} (keep-alive server for Render)`);
+
+  const handler = () => new Response("Bot is running ✅");
+  Deno.serve({ port: parseInt(port) }, handler);
+}
